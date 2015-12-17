@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TreeBuilder {
 
-	public Node setUpTree(List<Integer> nodes) {
+	public static Node setUpTree(List<Integer> nodes) {
 		Node firstNode = null;
 		
 		if (nodes == null ) {
@@ -22,22 +22,34 @@ public class TreeBuilder {
 		return firstNode;		
 	}
 	
-	private void addToTree(Node firstNode, int number) {
+	private static void addToTree(Node firstNode, int number) {
 		Node currentNode = firstNode;
 		
 		while (currentNode != null ) {
-			Node leftChild;
-			Node rightChild;
+			Node child;
+			boolean isLeftChild = false;
 			
 			if (number < currentNode.getValue() ) {
-				leftChild = currentNode.getLeftChild();
+				child = currentNode.getLeftChild();
+				isLeftChild = true;
 			} else {
-				rightChild = currentNode.getRightChild();
+				child = currentNode.getRightChild();
 			}
 			
-//			if (child == null ) {
-//				child = new Node(number);
-//			}
+			if (child != null ) {
+				currentNode = child;
+				continue;
+			}
+			
+			child = new Node(number);
+			
+			if (isLeftChild ) {
+				currentNode.setLeftChild(child);
+			} else {
+				currentNode.setRightChild(child);
+			}
+			
+			currentNode = null;
 		}
 	}
 	
