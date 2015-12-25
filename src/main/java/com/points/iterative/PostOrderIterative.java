@@ -5,7 +5,7 @@ import java.util.Stack;
 
 import com.points.tree.Node;
 
-public class PreOrderIterative {
+public class PostOrderIterative {
 	
 	public static List<Integer> traverse(Node node, List<Integer> orderList) {
 		if (node == null ) {
@@ -13,32 +13,30 @@ public class PreOrderIterative {
 		}
 		
 		Stack<Node> stack = new Stack<>();
-		stack.add(node);
-		orderList.add(node.getValue());
+		stack.push(node);
+		
 		boolean traverseLeft = true;
 		
-		while (!stack.isEmpty() ) {	
+		while (!stack.isEmpty() ) {
 			Node currentNode = stack.peek();
 			
-			Node child = currentNode.getLeftChild();
-			if (traverseLeft && child != null ) {
-				stack.add(child);
-				orderList.add(child.getValue());
-				continue;
+			while (traverseLeft && currentNode.getLeftChild() != null ) {
+				stack.add(currentNode.getLeftChild());
+				currentNode = stack.peek();				
 			}
 			traverseLeft = false;
 			
-			child = currentNode.getRightChild();
-			if (child != null ) {
-				stack.add(child);
-				orderList.add(child.getValue());
+			if (currentNode.getRightChild() != null ) {
+				stack.add(currentNode.getRightChild());
 				traverseLeft = true;
 				continue;
 			}
 			
 			currentNode = stack.pop();
+			orderList.add(currentNode.getValue());
 			while (!stack.isEmpty() && stack.peek().getRightChild() == currentNode ) {
 				currentNode = stack.pop();
+				orderList.add(currentNode.getValue());
 			}
 		}
 		

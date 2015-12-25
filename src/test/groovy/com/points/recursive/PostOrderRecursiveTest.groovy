@@ -1,0 +1,18 @@
+package com.points.recursive
+
+import static org.junit.Assert.*
+import org.junit.Test
+
+import com.points.tree.TreeBuilder;
+
+class PostOrderRecursiveTest {
+	
+	@Test
+	public void testPostOrderRecursive() {
+		def list = [10, 4, 20, 3, 6, 15, 21, 1, 7]
+		def expectedResult = [1, 3, 7, 6, 4, 15, 21, 20, 10]
+		def tree = TreeBuilder.setUpTree(list)
+		assertEquals(expectedResult, PostOrderRecursive.traverse(tree, []))
+	}
+
+}
