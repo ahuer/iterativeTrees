@@ -13,31 +13,27 @@ public class PostOrderIterative {
 		}
 		
 		Stack<Node> stack = new Stack<>();
-		stack.push(node);
+		Node currentNode = node;
 		
-		boolean traverseLeft = true;
-		
-		while (!stack.isEmpty() ) {
-			Node currentNode = stack.peek();
+		while (!stack.isEmpty() || currentNode != null ) {
 			
-			while (traverseLeft && currentNode.getLeftChild() != null ) {
-				stack.add(currentNode.getLeftChild());
-				currentNode = stack.peek();				
-			}
-			traverseLeft = false;
-			
-			if (currentNode.getRightChild() != null ) {
-				stack.add(currentNode.getRightChild());
-				traverseLeft = true;
-				continue;
-			}
-			
-			currentNode = stack.pop();
-			orderList.add(currentNode.getValue());
-			while (!stack.isEmpty() && stack.peek().getRightChild() == currentNode ) {
-				currentNode = stack.pop();
-				orderList.add(currentNode.getValue());
-			}
+		    if (currentNode != null ) {
+		        stack.push(currentNode);
+		        currentNode = currentNode.getLeftChild();
+		        continue;
+		    }
+		    
+		    while (!stack.isEmpty() && stack.peek().getRightChild() == currentNode ) {
+		        currentNode = stack.pop();
+		        orderList.add(currentNode.getValue());
+		    }
+		    
+		    if (!stack.isEmpty() ) {
+		        currentNode = stack.peek().getRightChild();
+		        continue;
+		    }		    
+		    
+		    currentNode = null;
 		}
 		
 		return orderList;

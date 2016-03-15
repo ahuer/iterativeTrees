@@ -14,31 +14,21 @@ public class PreOrderIterative {
 		
 		Stack<Node> stack = new Stack<>();
 		stack.add(node);
-		orderList.add(node.getValue());
-		boolean traverseLeft = true;
 		
 		while (!stack.isEmpty() ) {	
-			Node currentNode = stack.peek();
+			Node currentNode = stack.pop();
+			orderList.add(currentNode.getValue());
 			
-			Node child = currentNode.getLeftChild();
-			if (traverseLeft && child != null ) {
-				stack.add(child);
-				orderList.add(child.getValue());
-				continue;
-			}
-			traverseLeft = false;
+			Node child = currentNode.getRightChild();
 			
-			child = currentNode.getRightChild();
 			if (child != null ) {
 				stack.add(child);
-				orderList.add(child.getValue());
-				traverseLeft = true;
-				continue;
 			}
 			
-			currentNode = stack.pop();
-			while (!stack.isEmpty() && stack.peek().getRightChild() == currentNode ) {
-				currentNode = stack.pop();
+			child = currentNode.getLeftChild();
+			
+			if (child != null ) {
+				stack.add(child);
 			}
 		}
 		
